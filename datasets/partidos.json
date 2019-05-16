@@ -1,18 +1,26 @@
-{ "local": 2, "visitante": 6,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-14T21:30:00Z"}
-{ "local": 9, "visitante": 4,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-15T16:00:00Z"}
-{ "local": 6, "visitante": 4,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-18T18:30:00Z"}
-{ "local": 2, "visitante": 9,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-15T21:30:00Z"}
-{ "local": 4, "visitante": 2,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Corinthians, São Paulo","diahora":"2019-06-22T16:00:00Z"}
-{ "local": 6, "visitante": 9,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-22T16:00:00Z"}
-{ "local": 1, "visitante": 8,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-15T19:00:00Z"}
-{ "local": 10, "visitante": 11,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-16T16:00:00Z"}
-{ "local": 8, "visitante": 11,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-19T18:30:00Z"}
-{ "local": 1, "visitante": 10,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-19T21:30:00Z"}
-{ "local": 11, "visitante": 1,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-23T16:00:00Z"}
-{ "local": 8, "visitante": 10,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-23T16:00:00Z"}
-{ "local": 3, "visitante": 7,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-16T19:00:00Z"}
-{ "local": 12, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-17T20:00:00Z"}
-{ "local": 3, "visitante": 12,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-20T20:00:00Z"}
-{ "local": 7, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-21T20:00:00Z"}
-{ "local": 7, "visitante": 12,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-24T20:00:00Z"}
-{ "local": 3, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-24T20:00:00Z"}
+{ "local": 2, "visitante": 6,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-15T00:30:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 9, "visitante": 4,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-15T19:00:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 6, "visitante": 4,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-18T21:30:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 2, "visitante": 9,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-19T00:30:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 4, "visitante": 2,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Corinthians, São Paulo","diahora":"2019-06-22T19:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 6, "visitante": 9,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-22T19:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 1, "visitante": 8,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-15T22:00:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 10, "visitante": 11,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-16T19:00:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 8, "visitante": 11,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-19T21:30:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 1, "visitante": 10,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-20T00:30:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 11, "visitante": 1,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-23T19:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 8, "visitante": 10,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-23T19:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 3, "visitante": 7,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-16T21:00:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 12, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Morumbi, São Paulo","diahora":"2019-06-17T23:00:00Z","Jornada":"F1","Estado":"Por Jugar"}
+{ "local": 3, "visitante": 12,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-20T23:00:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 7, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-21T23:00:00Z","Jornada":"F2","Estado":"Por Jugar"}
+{ "local": 7, "visitante": 12,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-24T23:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 3, "visitante": 5,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-06-24T23:00:00Z","Jornada":"F3","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-06-28T00:30:00Z","Jornada":"QF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-06-28T19:00:00Z","Jornada":"QF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Corinthians, São Paulo","diahora":"2019-06-28T23:00:00Z","Jornada":"QF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Fonte Nova, Salvador de Bahía","diahora":"2019-06-29T19:00:00Z","Jornada":"QF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Mineirão, Belo Horizonte","diahora":"2019-07-03T00:30:00Z","Jornada":"SF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Arena do Grêmio, Porto Alegre","diahora":"2019-07-04T00:30:00Z","Jornada":"SF","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Arena Corinthians, São Paulo","diahora":"2019-07-06T19:00:00Z","Jornada":"3P","Estado":"Por Jugar"}
+{ "local": 0, "visitante": 0,"goleslocal":0,"golesvisitante":0, "lugar":"Estadio Maracanã, Río de Janeiro","diahora":"2019-07-07T20:00:00Z","Jornada":"F","Estado":"Por Jugar"}
