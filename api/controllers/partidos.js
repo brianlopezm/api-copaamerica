@@ -4,7 +4,7 @@ let SeleccionModel= require('../models/seleccion');
 
 //Obtiene Todos los partidos
 function getAllGames(req, res){
-let find= partidoModel.find();
+let find= partidoModel.find().sort({diahora: 1});
 find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,partidos){
     if(err){
       res.status(500).send({message: 'Error al buscar los partidos'+'\n'+err});
@@ -23,7 +23,7 @@ find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,p
 function getGamesByTeam(req, res){
 let find;
 let sel = req.params.seleccion;
-find = partidoModel.find({$or:[{local: sel}, {visitante: sel}]});
+find = partidoModel.find({$or:[{local: sel}, {visitante: sel}]}).sort({diahora: 1});
 find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,partidos){
     if(err){
       res.status(500).send({message: 'Error al buscar los partidos'+'\n'+err});
@@ -36,6 +36,23 @@ find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,p
     }
   });
 
+}
+
+function getGamesByJornada(req, res){
+let find;
+let jorn = req.params.jornada;
+find = partidoModel.find({Jornada: jorn}).sort({diahora: 1});
+find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,partidos){
+    if(err){
+      res.status(500).send({message: 'Error al buscar los partidos'+'\n'+err});
+    }else{
+      if(!partidos){
+        res.status(404).send({message: 'No hay partidos'});
+      }else{
+        res.status(200).send({partidos});
+      }
+    }
+  });
 }
 
 //Actualiza un partido a partir de un id
@@ -65,7 +82,7 @@ function savePartido(req,res){
   partido.local = params.local;
   partido.visitante=params.visitante;
   partido.goleslocal=params.goleslocal;
-  partido.golevisitante=params.golevisitante;
+  partido.golesvisitante=params.golesvisitante;
   partido.lugar=params.lugar;
   partido.diahora=params.diahora;
 
@@ -114,6 +131,7 @@ function deletePartido(req,res){
 module.exports = {
   getGamesByTeam,
   getAllGames,
+  getGamesByJornada,
   updateGame,
   savePartido,
   deletePartido
