@@ -54,3 +54,7 @@ GET | /partidos/getJornada/:jornada| Se obtiene los partidos de determinada jorn
 PATCH | /partidos/updateGame/:id | Actualiza algunos campos de un partido (Selecciones) 
 POST | /partidos/saveGame | Almacena un partido
 DELETE | /partidos/deleteGame/:id'| Elimina un partido
+
+## FRONT-END ANGULAR
+
+ng serve y la URL http://localhost:4200/
