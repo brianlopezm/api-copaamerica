@@ -37,6 +37,7 @@ DELETE | /seleccion/deleteSeleccion/:id | Borra la seleccion con el id especific
 Metodo | URL | Descripcion
 -------|-----|------------
 GET | /grupos/getGrupo/:grupo| Devuelve el grupo especificado
+GET | /grupos/getSeleccion/:seleccion| Devuelve una seleccion de un grupo, con sus puntajes, goles..
 PATCH | /grupos/updatePuntajeSeleccion/:id| Modifica los puntajes, goles, partidos jugados de una selección.
 POST | /grupos/addSeleccion/:grupo | Agrega una seleccion existente en un grupo existente.
 POST | /grupos/addGrupo/ | Agrega un nuevo grupo dado un nombre de grupo y 4 id de selecciones existentes.
