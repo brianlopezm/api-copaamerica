@@ -1,0 +1,59 @@
+<div class="container">
+	<div class="row">		
+		<div class="col-12">
+			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+			  <div class="btn-group mr-2" role="group">
+			  		<button (click)="getPartidosByJornada('F1')" type="button" class="btn btn-secondary">FECHA 1</button>
+			  		<button (click)="getPartidosByJornada('F2')" type="button" class="btn btn-secondary">FECHA 2</button>
+			  		<button (click)="getPartidosByJornada('F3')" type="button" class="btn btn-secondary">FECHA 3</button>
+			  		<button (click)="getPartidosByJornada('QF')" type="button" class="btn btn-secondary">CUARTOS</button>
+			  		<button (click)="getPartidosByJornada('SF')" type="button" class="btn btn-secondary">SEMI</button>
+			  		<button (click)="getPartidosByJornada('3P')" type="button" class="btn btn-secondary">3ER PUESTO</button>
+			  		<button (click)="getPartidosByJornada('F')" type="button" class="btn btn-secondary">FINAL</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<table class="table  table-striped table-dark "style="background-color: #1b5e20;">
+			  <thead class="thead-dark">
+			  	  <th scope="col">Fecha</th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			      <th scope="col">Estadio</th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			   </thead>
+			      <tbody>
+			      	<tr *ngFor="let sel of Partido">
+			      		<td>{{sel.diahora|date:"short"}}</td>
+			      		<td>{{sel.local.alias}}</td>
+			      		<td>{{sel.goleslocal}}</td>
+			      		<td>{{sel.golesvisitante}}</td>
+			      		<td>{{sel.visitante.alias}}</td>
+			      		<td>{{sel.lugar}}</td>
+			      		<td>{{sel.Estado}}</td>
+						<td>
+			      			<button (click)="updateResultado(sel._id,sel.local._id,sel.visitante._id)" type="button" class="btn btn-secondary" >Jugar</button>
+			      		</td>
+			      		<td>
+			      			<button (click)="resetResultado(sel._id)" type="button" class="btn btn-secondary">Reset</button>
+			      		</td>
+			      	</tr>
+			      </tbody>
+			</table>
+		</div>
+		<div class="col-4">
+			<td>
+			    <h4>Goles Local</h4> <input style="color:#FFFFFF;background-color: #1b5e20;"  type="number" [(ngModel)]= "updateRes.goleslocal" placeholder="Goles Local" maxlength="2">
+			</td>
+			<td> 
+			      <h4>Goles Visitante</h4><input style="color:#FFFFFF;background-color: #1b5e20;" type="number" [(ngModel)]= "updateRes.golesvisitante" placeholder="Goles Visitante" maxlength="2">
+			</td>
+		</div>
+	</div>
+</div>
