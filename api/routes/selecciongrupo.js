@@ -4,6 +4,7 @@ var nationalTeamController = require('../controllers/selecciongrupo');
 var api = express.Router();
 
 api.get('/grupos/getGrupo/:grupo',nationalTeamController.getGroup);
+api.get('/grupos/getSeleccion/:seleccion',nationalTeamController.getSelecGrupo);
 api.patch('/grupos/updatePuntajeSeleccion/:id', nationalTeamController.updatePuntajeSeleccion);
 api.delete('/grupos/deleteGrupo/:grupo',nationalTeamController.deleteGrupo);
 api.delete('/grupos/deleteSeleccion/:id',nationalTeamController.deleteGrupo);
