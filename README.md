@@ -51,6 +51,7 @@ Metodo | URL | Descripcion
 GET | /partidos/getGames/:seleccion | Devuelve los partidos de una seleccion especificada
 GET | /partidos/getGames/ |Devuelve todos los partidos
 GET | /partidos/getJornada/:jornada| Se obtiene los partidos de determinada jornada
+GET | /partidos/getGame/:id| Se obtiene el partido de determinado id
 PATCH | /partidos/updateGame/:id | Actualiza algunos campos de un partido (Selecciones) 
 POST | /partidos/saveGame | Almacena un partido
 DELETE | /partidos/deleteGame/:id'| Elimina un partido
