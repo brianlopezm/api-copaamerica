@@ -19,6 +19,21 @@ find.populate({path: 'local'}).populate({path: 'visitante'}).exec(function(err,p
 }
 
 
+function getGameById(req, res){
+partidoModel.findById(req.params.id,function(err,result){
+    if(err){
+      res.status(501).send({message: 'Error al buscar el partido'+'\n'+err});
+    }else{ if(!result){
+        res.status(404).send({message: 'No existe el partido'});
+        }else{
+                res.status(200).send({partido: result});
+              }
+          }
+    }).populate({path: 'local'}).populate({path: 'visitante'});
+
+}
+
+
 //Obtiene los Partidos de un equipo
 function getGamesByTeam(req, res){
 let find;
@@ -131,6 +146,7 @@ function deletePartido(req,res){
 module.exports = {
   getGamesByTeam,
   getAllGames,
+  getGameById,
   getGamesByJornada,
   updateGame,
   savePartido,
