@@ -100,6 +100,8 @@ function savePartido(req,res){
   partido.golesvisitante=params.golesvisitante;
   partido.lugar=params.lugar;
   partido.diahora=params.diahora;
+  partido.Jornada=params.Jornada;
+  partido.Estado=params.Estado;
 
   SeleccionModel.countDocuments({$or:[{_id: params.local},{_id: params.visitante}]},function(err, c){
     if(err){
