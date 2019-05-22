@@ -28,6 +28,7 @@ Metodo | URL | Descripcion
 -------|-----|------------
 GET | /seleccion/getSeleccion/:id | Devuelve la seleccion dado un ID.
 GET | /seleccion/getSelecciones/ | Devuelve todas las selecciones.
+GET | /seleccion/getSeleccionByName/:name | Devuelve la seleccion dado su nombre.
 PATCH | /seleccion/updateSeleccion/:id | Modifica la seleccion con el id especificado.
 POST | /seleccion/saveSeleccion | Almacena una seleccion.
 DELETE | /seleccion/deleteSeleccion/:id | Borra la seleccion con el id especificado. 
