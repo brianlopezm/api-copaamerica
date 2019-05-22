@@ -18,6 +18,22 @@ function getSeleccion(req , res) {
   });
 }
 
+//obtiene una saleccion a partir de un id
+function getSeleccionByName(req , res) {
+  let findOne = Seleccion.findOne({name: req.params.name});
+  findOne.exec(function(err,seleccion) {
+    if (err) {
+      res.status(500).send({message: 'Error al buscar la seleccion'});
+    } else {
+      if (!seleccion) {
+        res.status(404).send({message: 'No hay selecciones'});
+      } else {
+        res.status(200).send({seleccion});
+      }
+    }
+  });
+}
+
 //obtiene todas las selecciones
 function getSelecciones(req,res) {
   Seleccion.find({}).sort('name').exec(function(err,selecciones) {
@@ -95,6 +111,7 @@ function deleteSeleccion(req,res){
 module.exports = {
   getSeleccion,
   getSelecciones,
+  getSeleccionByName,
   updateSeleccion,
   deleteSeleccion,
   saveSeleccion
