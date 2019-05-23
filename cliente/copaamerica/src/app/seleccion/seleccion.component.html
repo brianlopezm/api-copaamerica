@@ -1,0 +1,40 @@
+<!--<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    ELEGIR SELECCION
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+  	<div *ngFor="let sel of selecciones" >
+  		<button class="dropdown-item" type="button" (click)="mostrarid(sel._id)">{{sel.name}}</button>
+  	</div>
+  </div>
+  <div>el id es: {{id}}</div>
+</div>-->
+
+<div class="row">
+  <div class="col-xs-12 col-12 col-md-4 form-group">
+    <input type="text"
+           placeholder="Datepicker"
+           class="form-control"
+            bsDatepicker='theme-dark-blue'>
+  </div>
+</div>
+<timepicker [(ngModel)]="mytime"></timepicker>
+<pre class="alert alert-info">Time is: {{mytime}}</pre>
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Lugar</label>
+    <input class="form-control" id="exampleFormControlInput1" placeholder="Ej: Estadio Unico, La Plata">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Elegir Local</label>
+    <select  class="form-control" id="exampleFormControlSelect1">
+  		<option *ngFor="let sel of selecciones">{{sel.name}}</option>	
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Elegir Visitante</label>
+    <select  class="form-control" id="exampleFormControlSelect1">
+  		<option *ngFor="let sel of selecciones">{{sel.name}}</option>	
+    </select>
+  </div>
+</form>
