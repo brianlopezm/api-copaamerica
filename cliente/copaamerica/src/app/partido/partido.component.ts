@@ -27,7 +27,7 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
 
   constructor(private partidoService:PartidoService,private grupoService:GrupoService,private seleccionService:SeleccionService, private fmbuilder:FormBuilder) {
   this.getPartidosByJornada("F1");
-  //this.getSelecciones();
+  this.getSelecciones();
   this.formulario=this.fmbuilder.group({
       lugar: [],
       local: ['Por Definirse',Validators.required],
@@ -199,7 +199,7 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
     }
   }
 
-  /*getSelecciones(){
+  getSelecciones(){
     this.seleccionService.getSelecciones().subscribe(resultado=>{
       this.selecciones=resultado.selecciones;
       console.log(resultado);
@@ -207,5 +207,5 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
     error =>{
       console.log(JSON.stringify(error));
     });
-  }*/
+  }
 }

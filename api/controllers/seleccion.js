@@ -34,20 +34,6 @@ function getSeleccionByName(req , res) {
   });
 }
 
-function getIdSeleccion(req, res){
-  results = Seleccion.find({}).distinct("_id").exec(function(err,results) {
-    if (err) {
-      res.status(500).send({message: 'Error al buscar ids'});
-    } else {
-      if (!results) {
-        res.status(404).send({message: 'No hay ids'});
-      } else {
-        res.status(200).send({results});
-      }
-    }
-  });
-}
-
 //obtiene todas las selecciones
 function getSelecciones(req,res) {
   Seleccion.find({}).sort('name').exec(function(err,selecciones) {
@@ -128,6 +114,5 @@ module.exports = {
   getSeleccionByName,
   updateSeleccion,
   deleteSeleccion,
-  saveSeleccion,
-  getIdSeleccion
+  saveSeleccion
 }
