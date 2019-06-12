@@ -8,7 +8,8 @@ var partidoSchema = new mongoose.Schema({
   lugar: String,
   diahora: Date,
   Jornada: String,
-  Estado: String
+  Estado: String,
+  tipo: String
 }, { collection: 'partidos' });
 
 module.exports  = mongoose.model('partido', partidoSchema);

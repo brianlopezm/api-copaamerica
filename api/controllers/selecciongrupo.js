@@ -2,6 +2,22 @@ let GrupoModel = require('../models/selecciongrupo');
 let SeleccionModel= require('../models/seleccion');
 let mongoose = require('mongoose');
 
+
+
+function getAll(req,res){
+
+    GrupoModel.find({}).exec(function(err,selecciones){
+      if(err){
+          res.status(500).send({message: 'Error al buscar las selecciones'+'\n'+err});
+      }else {
+          if(!selecciones){
+              res.status(404).send({message: 'No hay selecciones'});
+          }else{
+              res.status(200).send({selecciones});
+          }
+      }
+    });
+}
 //Obtener un grupo ordenado primero por puntos, luego por diferencia de goles y luego goles a favor 
 function getGroup(req, res){
 let find;
@@ -61,20 +77,21 @@ function newGrupo(req,res){
                     { seleccion: req.body.sel3, pj: 0, puntos: 0, golesfav: 0, golesec: 0, difgoles:0, grupo: req.body.grupo },
                     { seleccion: req.body.sel4, pj: 0, puntos: 0, golesfav: 0, golesec: 0, difgoles:0, grupo: req.body.grupo }];
 
-   GrupoModel.countDocuments({grupo:req.params.grupo},function(err,grupo){
+   GrupoModel.countDocuments({grupo:req.body.grupo},function(err,grupo){
    if(err){
      res.status(501).send({message: 'Error al verificar existencia del grupo'+'\n'+err});
    }else{
-       if(grupo>0){            
+       if(grupo==0){            
             if(isDefault(req.body.sel1)||isDefault(req.body.sel2)||isDefault(req.body.sel3)||isDefault(req.body.sel4)){
               res.status(401).send({message: 'Se quiere agregar una seleccion con id=0 - Operacioón Invalida'})
             }else {
-              SeleccionModel.countDocuments({$or:[{_id: req.body.sel1},{_id: req.body.sel2},{_id: req.body.sel3},{_id: req.body.sel4}]},function(err, c) {
+              GrupoModel.countDocuments({$or:[{seleccion: req.body.sel1},{seleccion: req.body.sel2},{seleccion: req.body.sel3},{seleccion: req.body.sel4}]},function(err, c) {
                      if(err){
                           res.status(500).send({message: 'Ocurrio un problema al buscar las selecciones'+'\n'+err});
                      }else{
-                        if(c!=4){
-                            res.status(400).send({message: 'No se encuentra alguna de las selecciones'});
+                        if(c>0){
+                            console.log(c);
+                            res.status(400).send({message: 'Alguna de las selecciones esta en algun grupo'});
                         }
                         else{
                             GrupoModel.collection.insertMany(selecciones, function (err, docs) {
@@ -108,7 +125,6 @@ function isDefault(selid){
 
 function addSeleccion(req,res){
   let nSel = new GrupoModel();
-  let params= req.body;
   if(isDefault(req.body.seleccion)){res.status(401).send({message: 'Se quiere agregar una seleccion con id=0 - Operacioón Invalida'})}
   else {
   SeleccionModel.findOne({_id: req.body.seleccion},function (err,sel){
@@ -119,37 +135,50 @@ function addSeleccion(req,res){
       if(!sel){
         res.status(402).send({message: 'La seleccion no ha sido encontrado'});
       }
-      else {
-            GrupoModel.findOne({grupo:req.params.grupo},function(err,seleccion){
+      else { GrupoModel.findOne({seleccion:req.body.seleccion},function(err,selgrupo){
             if(err){
-              res.status(501).send({message: 'Error al encontrar el grupo'+'\n'+err});
-            }else{
-              if(!seleccion){
-                res.status(400).send({message: 'El grupo no ha sido encontrado'});
+              res.status(504).send({message: "Error al comprobar si la seleccion ya esta en un grupo"});
+            }
+            else {
+              if(!selgrupo){
+                        GrupoModel.findOne({grupo:req.params.grupo},function(err,seleccion){
+                        if(err){
+                          res.status(501).send({message: 'Error al encontrar el grupo'+'\n'+err});
+                        }else{
+                          if(!seleccion){
+                            res.status(400).send({message: 'El grupo no ha sido encontrado'});
+                          }
+                          else
+                            { 
+                              nSel.seleccion=req.body.seleccion;
+                              nSel.pj=0;
+                              nSel.puntos=0;
+                              nSel.golesfav=0;
+                              nSel.golesec=0;
+                              nSel.difgoles=0;
+                              nSel.grupo=req.params.grupo;
+                              nSel.save(function(err,selStored){
+                              if(err){
+                                res.status(500).send({message: 'No se ha agregado la seleccion'+'\n'+err});
+                              }else{
+                                if(!selStored){
+                                   res.status(404).send({message: 'No se ha agregado la seleccion'});
+                                }else{
+                                    res.status(200).send({seleccion: selStored});
+                                  }
+                                }
+                              });
+                            }
+                          }
+                        });
+
               }
-              else
-                { 
-                  nSel.seleccion=params.seleccion;
-                  nSel.pj=params.pj;
-                  nSel.puntos=params.puntos;
-                  nSel.golesfav=params.golesfav;
-                  nSel.golesec=params.golesec;
-                  nSel.difgoles=params.difgoles;
-                  nSel.grupo=req.params.grupo;
-                  nSel.save(function(err,selStored){
-                  if(err){
-                    res.status(500).send({message: 'No se ha agregado la seleccion'+'\n'+err});
-                  }else{
-                    if(!selStored){
-                       res.status(404).send({message: 'No se ha agregado la seleccion'});
-                    }else{
-                        res.status(200).send({seleccion: selStored});
-                      }
-                    }
-                  });
-                }
+              else {
+                res.status(403).send({message:"La seleccion ya esta en un grupo"});
               }
-            });
+            }
+      });
+
       }
     }
 
@@ -177,8 +206,7 @@ function deleteGrupo(req,res){
 //Eliminar Seleccion de grupo
 function deleteSeleccion(req,res){
   let selId = req.params.id;
-
-  GrupoModel.findByIdAndRemove(selId, function(err,seleccionRemoved){
+  GrupoModel.remove({seleccion:selId}, function(err,seleccionRemoved){
     if(err){
       res.status(500).send({message: 'Error al eliminar la seleccion'+'\n'+err});
     }else{
@@ -199,5 +227,6 @@ module.exports = {
   addSeleccion,
   deleteSeleccion,
   getSelecGrupo,
-  newGrupo
+  newGrupo,
+  getAll
 }

@@ -34,9 +34,23 @@ function getSeleccionByName(req , res) {
   });
 }
 
+function getIdSeleccion(req, res){
+  results = Seleccion.find({}).distinct("_id").exec(function(err,results) {
+    if (err) {
+      res.status(500).send({message: 'Error al buscar ids'});
+    } else {
+      if (!results) {
+        res.status(404).send({message: 'No hay ids'});
+      } else {
+        res.status(200).send({results});
+      }
+    }
+  });
+}
+
 //obtiene todas las selecciones
 function getSelecciones(req,res) {
-  Seleccion.find({}).sort('name').exec(function(err,selecciones) {
+  Seleccion.find({}).sort('_id').exec(function(err,selecciones) {
     if (err) {
       res.status(500).send({message: 'Error al buscar las selecciones'});
     } else {
@@ -75,8 +89,7 @@ function saveSeleccion(req,res){
 //Actualiza una seleccion a partir de un id
 function updateSeleccion(req,res){
   let seleccionId = req.params.id;
-  let update = req.body;
-
+  let update = {name:req.body.name,alias:req.body.alias};
   Seleccion.findByIdAndUpdate(seleccionId,update,{new:true},function(err,result){
     if(err){
       res.status(500).send({message: 'No se ha podido actualizar la seleccion'+'\n'+err});
@@ -114,5 +127,6 @@ module.exports = {
   getSeleccionByName,
   updateSeleccion,
   deleteSeleccion,
-  saveSeleccion
+  saveSeleccion,
+  getIdSeleccion
 }
