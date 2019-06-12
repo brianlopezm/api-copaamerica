@@ -14,11 +14,15 @@ export class PartidoService {
    getPartidosByJornada(jornada):Observable<any>{
   	return this.httpClient.get(this.apiURL+"/partidos/getJornada/"+jornada);
   }
+  getPartidosBySeleccion(seleccion):Observable<any>{
+    return this.httpClient.get(this.apiURL+"/partidos/getGames/"+seleccion);
+  }
   getPartidoById(id):Observable<any>{
   	return this.httpClient.get(this.apiURL+"/partidos/getGame/"+id);
   }
   updateResultado(partido:any,id:string):Observable<any>{
   	let json= JSON.stringify(partido);
+    console.log(partido+' '+ id);
   	let headers= new HttpHeaders().set('Content-Type','application/json');
   	return this.httpClient.patch(this.apiURL+"/partidos/updateGame/"+id,json,{headers:headers});
   }

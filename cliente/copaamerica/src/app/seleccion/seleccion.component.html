@@ -1,40 +1,47 @@
-<!--<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    ELEGIR SELECCION
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-  	<div *ngFor="let sel of selecciones" >
-  		<button class="dropdown-item" type="button" (click)="mostrarid(sel._id)">{{sel.name}}</button>
-  	</div>
-  </div>
-  <div>el id es: {{id}}</div>
-</div>-->
+<div class="container-fluid"> 
+  <div class="row">
+      <div class="col-lg-4 col-sm-6">
+          <table class="table  table-striped table-dark" style="background-color: #1b5e20;">
+              <thead>
+                  <th>Nombre</th>
+                  <th>Alias</th>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let seleccion of seleccionService.sel.selecciones">
+                    <td> {{ seleccion.name }}</td>
+                    <td> {{ seleccion.alias }}</td>
+                    <td>
+                        <button (click)="editSeleccion(seleccion)" type="button" class="btn btn-default" style="color: #FFFFFF;"> <i class="fas fa-edit"></i></button>  
+                        <button (click)="deleteSeleccion(seleccion._id, seleccionForm)" type="button" class="btn btn-default" style="color: #FFFFFF;"><i class="fas fa-trash"></i></button>
+                      </td>
+                </tr>
+              </tbody>
+          </table>
+      </div>
+    <div class="col-lg-8 col-sm-6">
+      <div class="row">
 
-<div class="row">
-  <div class="col-xs-12 col-12 col-md-4 form-group">
-    <input type="text"
-           placeholder="Datepicker"
-           class="form-control"
-            bsDatepicker='theme-dark-blue'>
+      </div>
+      <div class="card">
+          <h5 class="card-header">Editar</h5>
+          <div class="card-body">
+            <form #seleccionForm="ngForm" >
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="seleccionService.selectedSeleccion._id">
+                <div class="row">
+                  <div class="input-field col-s12">
+                    <input type="text" name="name" #name="ngModel" [(ngModel)]="seleccionService.selectedSeleccion.name" placeholder="Ingrese Nombre">
+                  </div>
+                  <div class="input-field col-s12">
+                    <input type="text" name="alias" #name="ngModel" [(ngModel)]="seleccionService.selectedSeleccion.alias" placeholder="Ingrese Alias">
+                  </div>
+                    <div class="input-field col-s12">
+                      <button class="btn right" style="margin-left: 2px;" (click)="resetForm(seleccionForm)">Limpiar</button>
+                      <button class="btn right" style="margin-left: 2px;" (click)="addSeleccion(seleccionForm)">Guardar</button>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
   </div>
 </div>
-<timepicker [(ngModel)]="mytime"></timepicker>
-<pre class="alert alert-info">Time is: {{mytime}}</pre>
-<form>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Lugar</label>
-    <input class="form-control" id="exampleFormControlInput1" placeholder="Ej: Estadio Unico, La Plata">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Elegir Local</label>
-    <select  class="form-control" id="exampleFormControlSelect1">
-  		<option *ngFor="let sel of selecciones">{{sel.name}}</option>	
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Elegir Visitante</label>
-    <select  class="form-control" id="exampleFormControlSelect1">
-  		<option *ngFor="let sel of selecciones">{{sel.name}}</option>	
-    </select>
-  </div>
-</form>

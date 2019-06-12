@@ -14,11 +14,12 @@ import { SeleccionComponent } from './seleccion/seleccion.component';
 import {SeleccionService} from './Server/seleccion.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { HomeComponent } from './home/home.component';
 const rutas: Routes = [
- // { path:'/',component: AppComponent},
   { path: 'grupos', component: GrupoComponent },
   { path: 'partidos', component: PartidoComponent },
   { path: 'selecciones', component: SeleccionComponent },
+  { path:'',component: HomeComponent},
 ];
 
 @NgModule({
@@ -27,7 +28,8 @@ const rutas: Routes = [
     HeaderComponent,
     GrupoComponent,
     PartidoComponent,
-    SeleccionComponent
+    SeleccionComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

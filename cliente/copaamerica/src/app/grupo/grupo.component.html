@@ -1,13 +1,23 @@
 <div class="container">
 	<div class="row">
 		<div class="col-4">
-			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-			  <div class="btn-group mr-2" role="group">
-			  		<button (click)="getGrupo('A')" type="button" class="btn btn-secondary">Grupo A</button>
-			    	<button (click)="getGrupo('B')" type="button" class="btn btn-secondary">Grupo B</button>
-			    	<button (click)="getGrupo('C')" type="button" class="btn btn-secondary">Grupo C</button>
+			<td>
+			  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    GRUPOS
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			  	<div *ngFor="let b of nombresgrupos" >
+			  		<button class="dropdown-item" (click)="getGrupo(b)"type="button">{{b}}</button>
+			  	</div>
 			  </div>
-			</div>
+			  <td><h4> Grupo {{actualgrupo}}</h4></td>
+			 <td>
+		</div>
+		<div class="col-2">
+			  	<button (click)="eliminarGrupo()" type="button" class="btn btn-primary"><i class="fas fa-trash"></i> Eliminar</button>
+		</div>
+		<div class="col-2">
+			<button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2"><i class="fas fa-plus-circle"></i>Seleccion</button>
 		</div>
 	</div>	
 	<div class="row">
@@ -31,11 +41,99 @@
 			      		<td>{{sel.golesec}}</td>
 			      		<td>{{sel.difgoles}}</td>
 			      		<td>
-			      			<button (click)="resetSelecGrupo(sel._id)" type="button" class="btn btn-secondary" >Reset</button>
+			      			<button (click)="deleteSeleccion(sel.seleccion._id,sel.seleccion.name)" type="button" class="btn btn-default" style="color: #FFFFFF;"><i class="fas fa-trash fa-2x"></i></button>
 			      		</td>
 			      	</tr>
 			      </tbody>
 			</table>
 		</div>
+		<div class="col-4 form-group" style="color:#FFFFFF;background-color: #1b5e20;">
+			<h3>Agregar Grupo</h3>
+			<form [formGroup]="formulario" >
+			  <div class="form-group">
+			    <label for="exampleFormControlInput1">Nombre Grupo</label>
+			    <input class="form-control" formControlName="grupo"id="exampleFormControlInput1" type="text" maxlength="1"placeholder="Ej:H">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect1">Seleccion 1</label>
+			    <select  class="form-control" formControlName="sel1"id="exampleFormControlSelect1">
+			  		<option *ngFor="let s of seleccionService.sel.selecciones">{{s._id}} - {{s.name}}</option>	
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect2">Seleccion 2</label>
+			    <select  class="form-control" formControlName="sel2" id="exampleFormControlSelect2">
+			  		<option *ngFor="let s of seleccionService.sel.selecciones">{{s._id}} - {{s.name}}</option>	
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect3">Seleccion 3</label>
+			    <select  class="form-control" formControlName="sel3" id="exampleFormControlSelect3">
+			  		<option *ngFor="let s of seleccionService.sel.selecciones" >{{s._id}} - {{s.name}}</option>	
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect4">Seleccion 4</label>
+			    <select  class="form-control" formControlName="sel4" id="exampleFormControlSelect4">
+			  		<option *ngFor="let s of seleccionService.sel.selecciones">{{s._id}} - {{s.name}}</option>	
+			    </select>
+			  </div>
+			  <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+				  CONFIRMAR
+				</button>
+			</form>
+		</div>
 	</div>
+</div>
+
+
+<!-- Modal Agregar Grupo-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">AGREGAR GRUPO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Desea agregar el grupo:
+        Nombre: " {{formulario.value.grupo}} "
+        Selecciones: {{formulario.value.sel1}} , {{formulario.value.sel2}}, {{formulario.value.sel3}}, {{formulario.value.sel4}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="onSubmit()" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Agregar Seleccion a Grupo -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Agregar Seleccion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addSel">
+          <div class="form-group">
+		    <label for="exampleFormControlSelect">Elegir Seleccion</label>
+		    <select  class="form-control" formControlName="sel" id="exampleFormControlSelect">
+		  		<option *ngFor="let s of seleccionService.sel.selecciones">{{s._id}} - {{s.name}}</option>	
+		    </select>
+		  </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addSeleccion()">Agregar</button>
+      </div>
+    </div>
+  </div>
 </div>

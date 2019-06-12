@@ -1,54 +1,26 @@
 <div class="container-fluid">
-	<div class="row">		
-		<div class="col-4" style="color:#FFFFFF;background-color: #1b5e20;">
-			<td>
-			<h4>Goles Local</h4> <input  type="number" [(ngModel)]= "updateRes.goleslocal" placeholder="Goles Local" maxlength="2">
-			</td>
-			<td> 
-			<h4>Goles Visitante</h4><input  type="number" [(ngModel)]= "updateRes.golesvisitante" placeholder="Goles Visitante" maxlength="2">
-			</td>
-			<br />
-		</div>
-		<div class="col-8" style="color:#FFFFFF;background-color: #1b5e20;">
-			<h4>Editar Selecciones</h4>
-			<td>
-			  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    LOCAL
-			  </button>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			  	<div *ngFor="let sel of selecciones" >
-			  		<button class="dropdown-item" type="button" (click)="changeLocal(sel._id,sel.name)">{{sel.name}}</button>
-			  	</div>
-			  </div>
-			  <td><pre class="alert alert-info">{{editNames.local}}</pre></td>
-			 <td>
-			 <td>
-			  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    VISITANTE
-			  </button>
-			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			  	<div *ngFor="let sel of selecciones" >
-			  		<button class="dropdown-item" type="button" (click)="changeVisitante(sel._id,sel.name)">{{sel.name}}</button>
-			  	</div>
-			  </div>
-			  <td><pre class="alert alert-info">{{editNames.visitante}}</pre></td>
-			 <td>
+	<div class="row">
+		<div class="col-8">
+			<div class="btn-group" role="group">
+			    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      Fase Grupo
+			    </button>
+			    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" >
+			      <a class="dropdown-item" *ngFor="let jorn of jornadasgrupo" (click)="getPartidosByJornada(jorn)">{{jorn}}</a>
+			    </div>
+  			</div>
+  			<div class="btn-group" role="group">
+			    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			      Fase Final
+			    </button>
+			    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" >
+			      <a class="dropdown-item" *ngFor="let jorn of jornadasfinales" (click)="getPartidosByJornada(jorn)">{{jorn}}</a>
+			    </div>
+  			</div>
+  			<div><h4>Jornada:{{actualJornada}}</h4></div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-0">
-			<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-			  <div class="btn-group-vertical mr-2" role="group">
-			  		<button (click)="getPartidosByJornada('F1')" type="button" class="btn btn-secondary" style='width:100px; height:55px' >FECHA 1</button>
-			  		<button (click)="getPartidosByJornada('F2')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>FECHA 2</button>
-			  		<button (click)="getPartidosByJornada('F3')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>FECHA 3</button>
-			  		<button (click)="getPartidosByJornada('QF')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>CUARTOS</button>
-			  		<button (click)="getPartidosByJornada('SF')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>SEMI</button>
-			  		<button (click)="getPartidosByJornada('3P')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>3ER PUESTO</button>
-			  		<button (click)="getPartidosByJornada('F')" type="button" class="btn btn-secondary"style='width:100px; height:55px'>FINAL</button>
-			  </div>
-			</div>
-		</div>
 		<div class="col-8">
 			<table class="table  table-striped table-dark "style="background-color: #1b5e20;">
 			  <thead class="thead-dark">
@@ -73,16 +45,16 @@
 			      		<td>{{sel.lugar}}</td>
 			      		<td>{{sel.Estado}}</td>
 						<td *ngIf="sel.Estado!='Jugado'">
-			      			<button (click)="updateResultado(sel._id,sel.local._id,sel.visitante._id)" type="button" class="btn btn-secondary" >Jugar</button>
+			      			<button (click)="partidoParcial(sel._id,sel.local,sel.visitante)"type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal" style="color: #FFFFFF;"><i class="fas fa-futbol fa-2x"></i></button>
 			      		</td>
 			      		<td *ngIf="sel.Estado!='Por Jugar'">
-			      			<button (click)="resetResultado(sel._id,sel.local._id,sel.visitante._id,sel.goleslocal,sel.golesvisitante)" type="button" class="btn btn-secondary" >Reset</button>
+			      			<button (click)="resetResultado(sel._id,sel.local._id,sel.visitante._id,sel.goleslocal,sel.golesvisitante)" type="button" class="btn btn-default" style="color: #FFFFFF;"><i class="fas fa-undo fa-2x"></i></button>
 			      		</td>
 			      		<td>
-			      			<button (click)="deletePartido(sel._id)" type="button" class="btn btn-secondary" >Eliminar</button>
+			      			<button (click)="deletePartido(sel._id)" type="button" class="btn btn-default" style="color: #FFFFFF;"><i class="fas fa-trash fa-2x"></i></button>
 			      		</td>
 			      		<td>
-			      			<button (click)="editarSelec(sel._id)" type="button" class="btn btn-secondary" >Editar</button>
+			      			<button (click)="setEditId(sel._id)" type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal2" style="color: #FFFFFF;"> <i class="fas fa-edit fa-2x"></i></button>
 			      		</td>
 			      	</tr>
 			      </tbody>
@@ -115,18 +87,106 @@
 			    </select>
 			  </div>
 			  <div class="form-group">
-			   <label for="exampleFormControlSelect1">Jornada</label>
-			    <select  class="form-control" formControlName="jornada"id="exampleFormControlSelect1">
-			  		<option>F1</option>
-			  		<option>F2</option>
-			  		<option>F3</option>
-			  		<option>QF</option>
-			  		<option>SF</option>	
-			  		<option>F</option>	
+			   <label for="exampleFormControlSelect1">Tipo</label>
+			    <select  class="form-control" formControlName="tipo"id="exampleFormControlSelect1">
+			  		<option *ngFor="let t of tipogrupo">{{t}}</option>
+			    </select>
+			  </div>
+			   <div class="form-group">
+			   <label for="exampleFormControlSelect1">Jornada</label> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3" style="color: #FFFFFF;"> <i class="fas fa-plus-circle"></i>Jornada</button>
+			    <select  class="form-control" formControlName="jornada"id="exampleFormControlSelect1" *ngIf="formulario.value.tipo=='Fase Grupos'">
+			  		<option >--</option>
+			  		<option *ngFor="let jorn of jornadasgrupo">{{jorn}}</option>
+			    </select>
+			    <select  class="form-control" formControlName="jornada"id="exampleFormControlSelect1" *ngIf="formulario.value.tipo=='Fase Final'">
+			  		<option >--</option>
+			  		<option *ngFor="let jornf of jornadasfinales">{{jornf}}</option>
 			    </select>
 			  </div>
 			  <button type="submit" class="btn btn-secondary" >Agregar</button>
 			</form><br />
 		</div>
 	</div>
+</div>
+<!--Modal Jugar-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Jugar Partido</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <td>
+			<h4>{{partidoedit.local.name}}</h4> <input  type="number" [(ngModel)]= "updateRes.goleslocal" placeholder="Goles Local" maxlength="2">
+			</td>
+			<td> 
+			<h4>{{partidoedit.visitante.name}}</h4><input  type="number" [(ngModel)]= "updateRes.golesvisitante" placeholder="Goles Visitante" maxlength="2">
+			</td>
+			<br />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="updateResultado()" data-dismiss="modal">Jugar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Editar-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel2">Editar Partido</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      		<form [formGroup]="editform">
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect1">Elegir Local</label>
+			    <select  class="form-control" formControlName="local"id="exampleFormControlSelect1">
+			  		<option *ngFor="let sel of selecciones">{{sel._id}}-{{sel.name}}</option>	
+			    </select>
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleFormControlSelect1">Elegir Visitante</label>
+			    <select  class="form-control" formControlName="visitante" id="exampleFormControlSelect1">
+			  		<option *ngFor="let sel of selecciones">{{sel._id}}-{{sel.name}}</option>	
+			    </select>
+			  </div>
+			</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="editarSelec()">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Modal Agregar Jornada-->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel3">Agregar Jornada</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	Aclaración: la jornada a agregar será momentanea para agregar el nuevo partido.
+      		<h4>Ingrese Jornada</h4> <input  type="text" [(ngModel)]= "newJornada" placeholder="Ej:F1" maxlength="2">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" (click)="addJornada()">Agregar</button>
+      </div>
+    </div>
+  </div>
 </div>

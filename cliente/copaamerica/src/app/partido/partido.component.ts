@@ -5,6 +5,7 @@ import {GrupoService} from '../Server/grupo.service';
 import {SeleccionService} from '../Server/seleccion.service';
 import { Observable} from 'rxjs';
 
+
 @Component({
   selector: 'app-partido',
   templateUrl: './partido.component.html',
@@ -13,82 +14,152 @@ import { Observable} from 'rxjs';
 export class PartidoComponent implements OnInit {
 local:any;
 visitante:any;
-updateRes:any={goleslocal:0,golesvisitante:0,Estado:'Jugado'};
-resetRes:any={goleslocal:0,golesvisitante:0,Estado:'Por Jugar'};
+updateRes:any;
+resetRes:any;
 Partido:any;
 actualJornada:string;
 selecciones:any;
-newPartido:any={local:0,visitante:0,goleslocal:0, golesvisitante:0,lugar:"",diahora:"",Jornada: "",Estado:"Por Jugar"};
+newPartido:any;
 bsValue = new Date();
 formulario:FormGroup;
-edit:any={local:0,visitante:0};
-editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
-
-
+editform:FormGroup;
+edit:any;
+editId:any;
+editNames:any;
+partidoedit:any;
+tipoJorn:number;
+newJornada:string;
+jornadasgrupo:string[];
+jornadasfinales:string[];
+tipogrupo:string[];
   constructor(private partidoService:PartidoService,private grupoService:GrupoService,private seleccionService:SeleccionService, private fmbuilder:FormBuilder) {
-  this.getPartidosByJornada("F1");
+  this.updateRes={goleslocal:0,golesvisitante:0,Estado:'Jugado'};
+  this.resetRes={goleslocal:0,golesvisitante:0,Estado:'Por Jugar'};
+  this.newPartido={local:0,visitante:0,goleslocal:0, golesvisitante:0,lugar:"",diahora:"",Jornada: "",Estado:"Por Jugar",tipo:""};
+  this.edit={local:0,visitante:0};
+  this.editNames={local:"Por Definirse",visitante:"Por Definirse"};
+  this.partidoedit={_id:0,local:0,visitante:0};
+  this.tipogrupo=["Fase Grupos","Fase Final"];
+  this.jornadasgrupo=[];
+  this.jornadasfinales=[];
   this.getSelecciones();
+  this.getPartidos();
   this.formulario=this.fmbuilder.group({
       lugar: [],
       local: ['Por Definirse',Validators.required],
       visitante: ['Por Definirse',Validators.required],
       jornada: ['',Validators.required],
+      tipo:['Fase Grupos',Validators.required],
     });
+  this.editform=this.fmbuilder.group({
+    local:['0-Por Definirse',Validators.required],
+    visitante:['0-Por Definirse',Validators.required],
+  });
 }
 
   ngOnInit() {
   }
+  partidoParcial(id,local,visitante){
+    this.partidoedit._id=id;
+    this.partidoedit.local=local;
+    this.partidoedit.visitante=visitante;
+  }
+  setTipoJornada(id){
+    this.tipoJorn=id;
+  }
+
+  //Agrega una nueva jornada 
+  addJornada(){
+    if(this.formulario.value.tipo=="Fase Grupos"){
+      if(this.jornadasgrupo.indexOf(this.newJornada)==-1){
+           this.jornadasgrupo.push(this.newJornada);
+      }else{
+        alert("Ya existe una jornada de Fase de Grupos con ese nombre")}
+   }else{  
+       if(this.jornadasfinales.indexOf(this.newJornada)==-1){
+           this.jornadasgrupo.push(this.newJornada);
+        }else {alert("Ya existe una jornada de Fase Final con ese nombre")}
+
+   } 
+  }
+
+
+  //OnSumbit del form de agregar un partido
   onSubmit(){
     this.newPartido.diahora=this.bsValue.toJSON();
     this.newPartido.lugar=this.formulario.value.lugar;
     this.newPartido.Jornada=this.formulario.value.jornada;
+    this.newPartido.tipo=this.formulario.value.tipo;
     this.seleccionService.getSeleccionByName(this.formulario.value.local).subscribe(resultado=>{
         this.newPartido.local=resultado.seleccion._id;
         this.seleccionService.getSeleccionByName(this.formulario.value.visitante).subscribe(resultado=>{
         this.newPartido.visitante=resultado.seleccion._id;
-        this.partidoService.agregarPartido(this.newPartido).subscribe();
-        this.getPartidosByJornada(this.actualJornada);
+        this.partidoService.agregarPartido(this.newPartido).subscribe(resultado=>{
+          this.actualJornada=this.newPartido.Jornada;
+          this.getPartidosByJornada(this.actualJornada);
+          alert("Partido Agregado con Exito!");
+        },error=>{
+            alert(JSON.stringify(error));
+            });
         }, error=>{
-          console.log(JSON.stringify(error));
+          alert(JSON.stringify(error));
         });
     }, error=>{
-      console.log(JSON.stringify(error));
+      alert(JSON.stringify(error));
     });
   }
 
+//Elimina un partido
   deletePartido(id){
-    this.partidoService.eliminarPartido(id).subscribe();
+    if(confirm('Seguro que quiere eliminar el partido?')){
+      this.partidoService.eliminarPartido(id).subscribe(res=>{
+          this.getPartidosByJornada(this.actualJornada);
+          alert("Partido Eliminado con Exito!");
+      },error=>{
+            alert(JSON.stringify(error));
+      });}
   }
-  changeLocal(id,name){this.edit.local=id;this.editNames.local=name;}
-  changeVisitante(id,name){this.edit.visitante=id;this.editNames.visitante=name;}
-  editarSelec(id){ this.partidoService.updateResultado(this.edit,id).subscribe(resultado=>{
+
+
+  setEditId(id){this.editId=id;}
+  
+  //Edita las selecciones de un partido
+  editarSelec(){ 
+    this.edit.local=+this.editform.value.local.substring(0,this.editform.value.local.indexOf('-'));
+    this.edit.visitante=+this.editform.value.visitante.substring(0,this.editform.value.visitante.indexOf('-'));
+    this.partidoService.updateResultado(this.edit,this.editId).subscribe(resultado=>{
     this.getPartidosByJornada(this.actualJornada);
   });}
-  getPartidos(id){
+  
+  //Obtiene todos los partidos
+  getPartidos(){
   	this.partidoService.getPartidos().subscribe(resultado =>{
-  		this.Partido=resultado.partidos;
+      this.getJornadas(resultado);
   	},
   	error =>{
-  		console.log(JSON.stringify(error));
+  		alert(JSON.stringify(error));
   	});
   }
+  
+  //Obtiene los partidos de una jornada dada
   getPartidosByJornada(jornada){
     this.partidoService.getPartidosByJornada(jornada).subscribe(resultado =>{
       this.Partido=resultado.partidos;
       this.actualJornada=jornada;
-      console.log(resultado);
     },
     error =>{
-      console.log(JSON.stringify(error));
+      alert(JSON.stringify(error));
     });
   }
-   updateResultado(id,local,visitante){
-      this.partidoService.updateResultado(this.updateRes,id).subscribe(resultado =>{
+
+  //Actualiza un partido
+   updateResultado(){
+      this.partidoService.updateResultado(this.updateRes,this.partidoedit._id).subscribe(resultado =>{
        this.getPartidosByJornada(this.actualJornada);
-       if(this.actualJornada=="F1"||this.actualJornada=="F2"||this.actualJornada=="F3"){
-         this.grupoService.getSeleccion(local).subscribe(res =>{
+       if(this.jornadasgrupo.indexOf(this.actualJornada)!=-1){
+         this.grupoService.getSeleccion(this.partidoedit.local._id).subscribe(res =>{
            this.local=res.seleccion;
-           this.grupoService.getSeleccion(visitante).subscribe(res =>{
+           this.grupoService.getSeleccion(this.partidoedit.visitante._id).subscribe(res =>{
              this.visitante=res.seleccion;
              this.updateGrupo(1);
              this.grupoService.updatePuntaje(this.local._id,this.local).subscribe();
@@ -96,15 +167,16 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
            });  
          });
        }
-       console.log("resultado actualizado",resultado);
+       alert("Resultado actualizado");
      },
      error =>{
-       console.log(JSON.stringify(error));
+       alert(JSON.stringify(error));
      });
    }
 
+//Resetea un partido
   resetResultado(id,local,visitante,gl,gv){
-    if(this.actualJornada=="F1"||this.actualJornada=="F2"||this.actualJornada=="F3"){
+   if(this.jornadasgrupo.indexOf(this.actualJornada)!=-1){
       this.updateRes.goleslocal=gl;
       this.updateRes.golesvisitante=gv;
       this.grupoService.getSeleccion(local).subscribe(res =>{
@@ -117,31 +189,25 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
          });  
        });
     }
-     return this.partidoService.updateResultado(this.resetRes,id).subscribe(resultado =>{
+       this.partidoService.updateResultado(this.resetRes,id).subscribe(resultado =>{
        this.getPartidosByJornada(this.actualJornada);
-       console.log(resultado);
      },
      error =>{
-       console.log(JSON.stringify(error));
+       alert(JSON.stringify(error));
      });
   }
 
+//Actualizacion de los puntajes de una seleccion de un grupo
   updateGrupo(update){
     let usg;
       if(this.updateRes.goleslocal ==this.updateRes.golesvisitante){
-        //this.updateSelecGrupo(1);
         usg=1;
-        console.log("empataron");
       }else{ 
         if(this.updateRes.goleslocal >this.updateRes.golesvisitante){
-          //this.updateSelecGrupo(2);
           usg=2;
-          console.log("gano local");
         }
         else {
-          //this.updateSelecGrupo(3);
           usg=3;
-          console.log("gano visitante");
         }
 
       }
@@ -199,13 +265,31 @@ editNames:any={local:"Por Definirse",visitante:"Por Definirse"};
     }
   }
 
+//Obtiene las selecciones 
   getSelecciones(){
     this.seleccionService.getSelecciones().subscribe(resultado=>{
       this.selecciones=resultado.selecciones;
-      console.log(resultado);
     },
     error =>{
-      console.log(JSON.stringify(error));
+      alert(JSON.stringify(error));
+    });
+  }
+
+  //Genera los arreglos de jornadas fase de grupos y finales 
+  getJornadas(resultado){
+    resultado.partidos.forEach(element=> {
+      if(element.tipo=="Fase Grupos"){
+         if(this.jornadasgrupo.indexOf(element.Jornada)==-1){
+            this.jornadasgrupo.push(element.Jornada);
+          }
+      }else{
+        if(element.tipo=="Fase Final"){
+          if(this.jornadasfinales.indexOf(element.Jornada)==-1){
+            this.jornadasfinales.push(element.Jornada);
+          }
+        }
+      }
+     
     });
   }
 }
