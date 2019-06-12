@@ -29,7 +29,8 @@ Metodo | URL | Descripcion
 GET | /seleccion/getSeleccion/:id | Devuelve la seleccion dado un ID.
 GET | /seleccion/getSelecciones/ | Devuelve todas las selecciones.
 GET | /seleccion/getSeleccionByName/:name | Devuelve la seleccion dado su nombre.
-PATCH | /seleccion/updateSeleccion/:id | Modifica la seleccion con el id especificado.
+GET | /seleccion/getIdSeleccion/ | Obtiene todos los ids de las selecciones
+PUT | /seleccion/updateSeleccion/:id | Modifica la seleccion con el id especificado.
 POST | /seleccion/saveSeleccion | Almacena una seleccion.
 DELETE | /seleccion/deleteSeleccion/:id | Borra la seleccion con el id especificado. 
 
@@ -39,6 +40,7 @@ Metodo | URL | Descripcion
 -------|-----|------------
 GET | /grupos/getGrupo/:grupo| Devuelve el grupo especificado
 GET | /grupos/getSeleccion/:seleccion| Devuelve una seleccion de un grupo, con sus puntajes, goles..
+GET | /grupos/getAll | Obtiene todos los grupos
 PATCH | /grupos/updatePuntajeSeleccion/:id| Modifica los puntajes, goles, partidos jugados de una selección.
 POST | /grupos/addSeleccion/:grupo | Agrega una seleccion existente en un grupo existente.
 POST | /grupos/addGrupo/ | Agrega un nuevo grupo dado un nombre de grupo y 4 id de selecciones existentes.
