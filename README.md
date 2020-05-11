@@ -67,10 +67,10 @@ Los pickers de tiempo y fecha son de https://www.npmjs.com/package/ngx-bootstrap
 
 ```yaml
 {
-	"firstName":"ExampleFirstName",
-	"lastName":"ExampleLastName",
-	"userName":"user",
-	"address":"ExampleAddress",
-	"mail":"Example@mail.com"
+"firstName":"ExampleFirstName",
+"lastName":"ExampleLastName",
+"userName":"user",
+"address":"ExampleAddress",
+"mail":"Example@mail.com"
 }
 ```
