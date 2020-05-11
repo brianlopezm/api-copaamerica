@@ -65,7 +65,7 @@ ng serve y la URL http://localhost:4200/
 Los pickers de tiempo y fecha son de https://www.npmjs.com/package/ngx-bootstrap. Para documentacion: https://valor-software.com/ngx-bootstrap/#/documentation
 
 
-```javascript
+```yaml
 {
 	"firstName":"ExampleFirstName",
 	"lastName":"ExampleLastName",
